@@ -1,0 +1,20 @@
+{
+	"name": "@pipobscure/sea",
+	"version": "1.0.0",
+	"description": "Node SEA Builder",
+	"main": "lib/bundle.js",
+	"scripts": {},
+	"keywords": [
+		"Single Executable Application"
+	],
+	"author": "Philipp Dunkel <pip@pipobscure.com>",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pipobscure/sea.git"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"glob": "^10.3.10",
+		"postject": "^1.0.0-alpha.6"
+	}
+}
