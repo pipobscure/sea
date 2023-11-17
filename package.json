@@ -3,7 +3,10 @@
 	"version": "1.0.0",
 	"description": "Node SEA Builder",
 	"main": "lib/bundle.js",
-	"scripts": {},
+	"scripts": {
+		"version": "git add package.json",
+		"postversion": "git push && git push-tags && npm publish"
+	},
 	"keywords": [
 		"Single Executable Application"
 	],
