@@ -5,7 +5,7 @@
 	"main": "lib/bundle.js",
 	"scripts": {
 		"version": "git add package.json",
-		"postversion": "git push && git push-tags && npm publish"
+		"postversion": "git push && git push --tags && npm publish"
 	},
 	"keywords": [
 		"Single Executable Application"
