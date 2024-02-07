@@ -1,0 +1,3 @@
+[submodule ".tpl"]
+	path = .tpl
+	url = https://github.com/pipobscure/template.git

@@ -2,22 +2,43 @@
 	"name": "@pipobscure/sea",
 	"version": "1.0.2",
 	"description": "Node SEA Builder",
-	"main": "lib/bundle.js",
-	"scripts": {
-		"version": "git add package.json",
-		"postversion": "git push && git push --tags && npm publish"
+	"main": "dist/resolutions.js",
+	"bin": {
+		"sea": "./scripts/sea.js"
 	},
-	"keywords": [
-		"Single Executable Application"
-	],
-	"author": "Philipp Dunkel <pip@pipobscure.com>",
+	"scripts": {
+		"test": "node --test \"dist/**/*.test.js\"",
+		"format": "prettier --write \"src/**/*.ts\" package.json tsconfig.json",
+		"lint": "eslint --ext ts .",
+		"build": "tsc --build",
+		"watch": "tsc --watch"
+	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/pipobscure/sea.git"
+		"url": ""
 	},
+	"engines": {
+		"node": ">21.6.1"
+	},
+	"keywords": [
+		"SingleExecutableApplication",
+		"SEA"
+	],
+	"contributors": [],
 	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^20.8.9",
+		"@typescript-eslint/parser": "^5.59.0",
+		"eslint": "^8.38.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-import": "^2.28.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"prettier": "^3.0.3",
+		"typescript": "^5.2.2"
+	},
 	"dependencies": {
 		"glob": "^10.3.10",
-		"postject": "^1.0.0-alpha.6"
+		"postject": "^1.0.0-alpha.6",
+		"terser": "^5.26.0"
 	}
 }
