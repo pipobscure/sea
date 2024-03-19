@@ -1,6 +1,6 @@
 {
 	"name": "@pipobscure/sea",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Node SEA Builder",
 	"main": "dist/resolutions.js",
 	"bin": {
