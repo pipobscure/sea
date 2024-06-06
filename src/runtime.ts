@@ -354,7 +354,8 @@ function load(parent?: string, specifier?: string) {
 			switch (Path.extname(name).toLowerCase()) {
 				case '.json':
 					return (module.exports = JSON.parse(asset(id, 'utf-8')));
-				case '.js': {
+				case '.js':
+				case '.cjs': {
 					const dirname = new URL('./', url).toString();
 					const exec = new VM.Script(`(function module(module,exports,require,__dirname,__filename) {\n${asset(id, 'utf-8')}\n})`, { filename: id, lineOffset: -1 }).runInThisContext();
 					const main = modules[resolve().toString()];
