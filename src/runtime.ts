@@ -8,6 +8,7 @@ import * as VM from 'node:vm';
 import * as OS from 'node:os';
 import * as FS from 'node:fs';
 import { Module } from 'node:module';
+import assert from 'node:assert';
 
 const VERSION = 1;
 const COMPRESSION = {
@@ -25,7 +26,9 @@ const HASH = {
 const PROTO = 'sea:';
 
 const resolutions: Record<string, Record<string, string>> = JSON.parse(SEA.getAsset('resolv', 'utf8'));
-const blobs = extractBlobs(SEA.getRawAsset('bundle'));
+const bundle = SEA.getRawAsset('bundle');
+assert(typeof bundle === 'object', 'bundle is not an ArrayBuffer');
+const blobs = extractBlobs(bundle);
 
 function extractBlobs(data: ArrayBuffer) {
 	const index: Record<string, ReturnType<typeof blobData>> = {};
