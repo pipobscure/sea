@@ -15,12 +15,7 @@ const resolutions: Record<string, Record<string, string>> = {};
 
 function replacementResolveFilename(this: Module, request: string, parent: Module, isMain: boolean) {
 	const resolved = _resolveFilename.call(this, request, parent, isMain);
-	const parentfile = parent?.filename
-		? '/' +
-			Path.relative(PackageBase, parent?.filename)
-				.split(Path.sep)
-				.join('/')
-		: '<main>';
+	const parentfile = parent?.filename ? '/' + Path.relative(PackageBase, parent?.filename).split(Path.sep).join('/') : '<main>';
 	const cache = (resolutions[parentfile] = resolutions[parentfile] ?? {});
 	const specifier = (request === process.argv[1] ? '<main>' : request).split(Path.sep).join('/');
 	if (!Module.isBuiltin(request)) {

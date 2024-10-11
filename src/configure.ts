@@ -32,8 +32,8 @@ export async function configure() {
 		main: File.runtime,
 		output: File.bundle,
 		disableExperimentalSEAWarning: true,
-		useSnapshot: false,
-		useCodeCache: true,
+		useSnapshot: File.useSnapshot,
+		useCodeCache: File.useCodeCache,
 		assets: {
 			resolv: File.resolutions,
 			bundle: File.blobs,

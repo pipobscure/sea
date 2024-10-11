@@ -133,8 +133,6 @@ function resolve(parent?: string, specifier?: string) {
 	}
 }
 function patch(id: string, exports: object) {
-	// @ts-expect-error
-	exports.__esModule = true;
 	switch (id) {
 		case 'node:fs':
 			return patchFS(exports as typeof FS);
