@@ -90,7 +90,7 @@ function asset(urlStr: string, encoding?: BufferEncoding) {
 	const info = blobs[name];
 	if (!info) throw new Error(`not an asset: ${name}`);
 
-	let data = Buffer.from(info.blob);
+	let data: Buffer<ArrayBufferLike> = Buffer.from(info.blob);
 	switch (info.compression) {
 		case COMPRESSION.BROTLI:
 			data = ZLib.brotliDecompressSync(data);
@@ -133,17 +133,23 @@ function resolve(parent?: string, specifier?: string) {
 	}
 }
 function patch(id: string, exports: object) {
-	// @ts-expect-error
-	try { exports.__esModule = true; } catch {}
-	switch (id) {
-		case 'node:fs':
-			return patchFS(exports as typeof FS);
-		case 'node:fs/promises':
-			return patchFSP(exports as typeof FS.promises);
-		case 'node:path':
-			return patchPath(exports as typeof Path);
-		default:
-			return exports;
+	try {
+		// @ts-expect-error
+		exports.__esModule = true;
+	} catch {}
+	try {
+		switch (id) {
+			case 'node:fs':
+				return patchFS(exports as typeof FS);
+			case 'node:fs/promises':
+				return patchFSP(exports as typeof FS.promises);
+			case 'node:path':
+				return patchPath(exports as typeof Path);
+			default:
+				return exports;
+		}
+	} catch {
+		return exports;
 	}
 	function resolve(one: string, two?: string, ...rest: string[]) {
 		const url = two ? new URL(two, one) : new URL(one);

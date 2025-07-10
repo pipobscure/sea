@@ -25,6 +25,7 @@
 		"noEmit": false,
 		"resolveJsonModule": false,
 		"outDir": "dist/",
+		"skipLibCheck": true,
 		"typeRoots": ["./node_modules/@types/**/", "./types/**/"]
 	},
 	"include": ["src"],
