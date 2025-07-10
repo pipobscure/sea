@@ -1,7 +1,8 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, statSync, chmodSync, constants as fsConstants } from 'node:fs';
 import * as Path from 'node:path';
 import * as FS from 'node:fs/promises';
 import * as Proc from 'node:child_process';
+import * as OS from 'node:os';
 
 //@ts-ignore
 import { inject } from 'postject';
@@ -17,14 +18,28 @@ export async function inject() {
 	await exec(process.execPath, '--experimental-sea-config', Path.join(PackageBase, File.config));
 
 	console.error(`copying ${process.execPath} to ${File.executable}`);
-	await FS.copyFile(process.execPath, Path.join(PackageBase, File.executable));
+	let newExeFilePath = Path.join(PackageBase, File.executable);
+	await FS.copyFile(process.execPath, newExeFilePath);
+
+	let newFileExeStat = statSync(newExeFilePath);
+	let newFileExeStatMode = newFileExeStat.mode;
+	chmodSync(Path.join(PackageBase, File.executable), newFileExeStatMode | fsConstants.S_IWUSR);
 
 	console.error(`injecting ${File.bundle} into ${File.executable}`);
 	const runtime = await FS.readFile(Path.join(PackageBase, File.bundle));
-	//@ts-ignore
-	await inject(Path.join(PackageBase, File.executable), 'NODE_SEA_BLOB', runtime, {
-		sentinelFuse: 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2',
-	});
+	const osPlatform = OS.platform();
+	if ( osPlatform == "darwin") {
+		//@ts-ignore
+		await inject(Path.join(PackageBase, File.executable), 'NODE_SEA_BLOB', runtime, {
+			sentinelFuse: 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2',
+			machoSegmentName: 'NODE_SEA',
+		});
+	} else {
+		//@ts-ignore
+		await inject(Path.join(PackageBase, File.executable), 'NODE_SEA_BLOB', runtime, {
+			sentinelFuse: 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2',
+		});
+	}
 }
 
 function exec(cmd: string, ...args: string[]) {

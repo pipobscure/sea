@@ -11,6 +11,8 @@ export default function names(PKG: any) {
 	const runtime = `${name}.js`;
 	const bundle = `${name}.sea`;
 	const executable = `${name}${isWindows ? '.exe' : ''}`;
+	const useSnapshot = PKG?.sea?.useSnapshot ?? false;
+	const useCodeCache = PKG?.sea?.useCodeCache ?? false;
 	const files = {
 		config,
 		blobs,
@@ -19,6 +21,8 @@ export default function names(PKG: any) {
 		runtime,
 		bundle,
 		executable,
+		useSnapshot,
+		useCodeCache,
 	};
 	return files;
 }
